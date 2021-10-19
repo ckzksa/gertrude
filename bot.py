@@ -7,6 +7,8 @@ from discord import Intents
 from discord.ext import commands
 from discord_components import DiscordComponents
 
+__version__ = "1.0"
+
 if not os.path.isfile("config.json"):
   sys.exit("'config.json' not found! Please add it and try again.")
 else:
@@ -28,7 +30,7 @@ DiscordComponents(bot)
 
 @bot.event
 async def on_ready():
-  print(" _____           _                  _      \n|  __ \         | |                | |     \n| |  \/ ___ _ __| |_ _ __ _   _  __| | ___ \n| | __ / _ \ '__| __| '__| | | |/ _` |/ _ \ \n| |_\ \  __/ |  | |_| |  | |_| | (_| |  __/\n \____/\___|_|   \__|_|   \__,_|\__,_|\___|\n")
+  print(f" _____           _                  _      \n|  __ \         | |                | |     \n| |  \/ ___ _ __| |_ _ __ _   _  __| | ___ \n| | __ / _ \ '__| __| '__| | | |/ _` |/ _ \ \n| |_\ \  __/ |  | |_| |  | |_| | (_| |  __/\n \____/\___|_|   \__|_|   \__,_|\__,_|\___| v{__version__}\n")
   print(f"Discord.py v{discord.__version__}")
   print(f"Logged in as {bot.user.name}")
   
