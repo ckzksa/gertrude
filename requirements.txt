@@ -1,3 +1,4 @@
 discord-py
+pynacl
 youtube_dl
 discord_components
