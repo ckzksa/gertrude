@@ -1,5 +1,6 @@
 import discord
 import re
+import random
 
 from discord import FFmpegPCMAudio
 from discord.ext import commands
@@ -72,6 +73,9 @@ class  Queue():
   
   def clear(self):
     self.queue = []
+
+  def shuffle(self):
+    random.shuffle(self.queue)
     
 
 class MusicBot(commands.Cog, name="Music"):
@@ -256,6 +260,15 @@ class MusicBot(commands.Cog, name="Music"):
     if queue.is_loop:
       queue.add(self.playing_song)
     await ctx.send(content="Loop activated" if queue.is_loop else "Loop deactivated")
+
+  @commands.command(
+    name="shuffle",
+    description="Shuffle the queue",
+    brief="Shuffle the queue",
+  )
+  async def shuffle_command(self, ctx):
+    if self.queues.get(ctx.guild):
+      self.queues[ctx.guild].shuffle()
 
 def setup(bot: commands.Bot):
   bot.add_cog(MusicBot(bot))
