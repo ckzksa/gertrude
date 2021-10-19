@@ -40,9 +40,9 @@ class Song():
       if re.match(URL_VALIDATOR, str) is not None:
         self.meta = ydl.extract_info(str, download=False)
       else:
-        print(f"search for {str}")
+        print(f"Searching for {str} on Youtube")
         self.meta = ydl.extract_info(f"ytsearch:{str}", download=False)['entries'][0]
-        print(self.meta['title'])
+        print(f"Found {self.meta['title']}")
 
   @property
   def url(self):
@@ -123,7 +123,7 @@ class MusicBot(commands.Cog, name="Music"):
     self.playing_song = self.get_queue_or_create(ctx.guild).pop()
     if not self.playing_song: return
 
-    print(self.playing_song.meta['webpage_url'])
+    print(f"Playing {self.playing_song.meta['title']} on {ctx.guild.name}")
     ctx.voice_client.play(FFmpegPCMAudio(self.playing_song.url, **FFMPEG_OPTIONS), after=lambda e: self.play_next(ctx))
 
   @commands.command(
