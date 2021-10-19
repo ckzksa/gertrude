@@ -12,8 +12,8 @@ def run():
 
 def start_thread():
     t = Thread(target=run)
+    t.daemon = True
     t.start()
 
 if __name__ == "__main__":
   run()
-  
