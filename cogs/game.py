@@ -14,7 +14,7 @@ class Game(Cog):
     brief="Start a tictactoe with someone",
   )
   async def tictactoe_command(self, ctx, user: discord.Member):
-    Tictactoe(self.bot, ctx, user).play()
+    await Tictactoe(self.bot, ctx, user).play()
     
 
 def setup(bot: Bot):
