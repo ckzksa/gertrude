@@ -78,7 +78,7 @@ class  Queue():
     random.shuffle(self.queue)
     
 
-class MusicBot(commands.Cog, name="Music"):
+class Music(commands.Cog, name="Music"):
   def __init__(self, bot: commands.Bot) -> None:
     self.bot = bot
     self.playing_song = None
@@ -271,4 +271,4 @@ class MusicBot(commands.Cog, name="Music"):
       self.queues[ctx.guild].shuffle()
 
 def setup(bot: commands.Bot):
-  bot.add_cog(MusicBot(bot))
+  bot.add_cog(Music(bot))
