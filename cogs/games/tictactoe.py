@@ -1,33 +1,27 @@
-import asyncio
-from logging import disable
 import discord
+import asyncio
 
-from discord.ext.commands import Bot, Cog
-from discord.ext import commands
-from discord_components import DiscordComponents, Button, ButtonStyle
+from discord_components import Button, ButtonStyle
 
-class Tictactoe(Cog):
-  def __init__(self, bot: Bot):
+class Tictactoe():
+  def __init__(self, bot, ctx, user: discord.Member) -> None:
     self.bot = bot
-
-  @commands.command(
-    name="tictactoe",
-    description="Start a tictactoe against someone",
-    brief="Start a tictactoe against someone",
-  )
-  async def tictactoe_command(self, ctx, user: discord.Member):
-    if ctx.author == user:
-      await ctx.send(f"{ctx.author.mention} You can't challenge yourself!")
+    self.ctx = ctx
+    self.user = user
+  
+  async def play(self):
+    if self.ctx.author == self.user:
+      await self.ctx.send(f"{self.ctx.author.mention} You can't challenge yourself!")
       return
-    if user.bot:
-      await ctx.send(f"{ctx.author.mention} Bots can't play!")
+    if self.user.bot:
+      await self.ctx.send(f"{self.ctx.author.mention} Bots can't play!")
       return
 
     board = [' '] * 9
 
     players = {
-        'X': user,
-        'O': ctx.author,
+        'X': self.user,
+        'O': self.ctx.author,
     }
     turn = 'X'
 
@@ -37,7 +31,7 @@ class Tictactoe(Cog):
       [Button(style=ButtonStyle.gray, label=' ', custom_id='6'), Button(style=ButtonStyle.gray, label=' ', custom_id='7'), Button(style=ButtonStyle.gray, label=' ', custom_id='8')],
     ]
 
-    game_message = await ctx.send(content=f'{user.mention} vs {ctx.author.mention}', components=components)
+    game_message = await self.ctx.send(content=f'{self.user.mention} vs {self.ctx.author.mention}', components=components)
 
     def is_over(board):
       win_states = [
@@ -98,7 +92,3 @@ class Tictactoe(Cog):
       await game_message.edit(content=f'Game Over! (timeout)', components=components)
     except Exception as e:
       await game_message.edit(content=f'Oooops an error occured')
-    
-
-def setup(bot: Bot):
-  bot.add_cog(Tictactoe(bot))
