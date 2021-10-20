@@ -1,6 +1,6 @@
 import discord
 
-from games.tictactoe import Tictactoe
+from cogs.games.tictactoe import Tictactoe
 from discord.ext.commands import Bot, Cog
 from discord.ext import commands
 
