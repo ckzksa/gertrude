@@ -8,7 +8,7 @@ from discord.ext import commands
 from youtube_dl import YoutubeDL
 
 YDL_OPTIONS = {
-  # 'format': 'bestaudio', # bestaudio prevents live streams
+  'format': 'bestaudio', # bestaudio prevents live streams
   'quiet': True,
   'postprocessors' : [{
       'key' : 'FFmpegExtractAudio',
@@ -48,7 +48,7 @@ class Song():
 
   @property
   def url(self):
-    return self.meta['url']
+    return self.meta['url'] # TODO select format to handle lives and videos
 
 
 class  Queue():
