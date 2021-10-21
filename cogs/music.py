@@ -220,7 +220,7 @@ class Music(commands.Cog, name="Music"):
     description="Clear the queue",
     brief="Clear the queue",
   )
-  async def clear_command(self, ctx, url):
+  async def clear_command(self, ctx):
     self.get_queue_or_create(ctx.guild).clear()
 
   @commands.command(
