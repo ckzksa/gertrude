@@ -1,9 +1,12 @@
 import discord
+import logging
 
 from cogs.games.tictactoe import Tictactoe
 from cogs.games.rps import Rockpaperscissors
 from discord.ext.commands import Bot, Cog
 from discord.ext import commands
+
+log = logging.getLogger(__name__)
 
 class Game(Cog):
   def __init__(self, bot: Bot):

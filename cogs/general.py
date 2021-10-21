@@ -1,8 +1,11 @@
 import discord
+import logging
 
 from discord.ext.commands import Bot, Cog
 from discord.ext import commands
-from discord_components import DiscordComponents, Button, ButtonStyle
+from discord_components import Button, ButtonStyle
+
+log = logging.getLogger(__name__)
 
 class General(Cog):
   def __init__(self, bot: Bot):

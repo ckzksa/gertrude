@@ -1,8 +1,10 @@
-import re
 import discord
 import asyncio
+import logging
 
 from discord_components import Button, ButtonStyle
+
+log = logging.getLogger(__name__)
 
 class Rockpaperscissors():
   def __init__(self, bot, ctx, user: discord.Member) -> None:
@@ -31,6 +33,8 @@ class Rockpaperscissors():
         Button(style=ButtonStyle.gray, label='Scissors', custom_id='2')
       ],
     ]
+
+    log.debug(f'RockPaperScissors started between {self.user} and {self.ctx.author}')
 
     challenge_message = await self.ctx.send(content=f'{self.user.mention}, {self.ctx.author.mention} challenged you to Rock Paper Scissors!', components=components)
 
@@ -87,8 +91,8 @@ class Rockpaperscissors():
         await interaction.respond(type=7, content=f'{self.user.mention}, {self.ctx.author.mention} challenged you to Rock Paper Scissors!', components=components)
         
     except asyncio.exceptions.TimeoutError as e:
-      print("timeout")
+      log.warn(f'RockPaperScissors Timeout message_id={challenge_message.id}')
       await challenge_message.delete()
     except Exception as e:
-      print(e)
+      log.error(e)
       await challenge_message.edit(content=f'Oooops an error occured')

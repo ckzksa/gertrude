@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "default": {
+      "format": "%(asctime)s - [%(levelname)s] %(name)s [%(module)s.%(funcName)s:%(lineno)d]: %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    }
+  },
+  "handlers": {
+    "default": {
+      "level": "DEBUG",
+      "class": "logging.StreamHandler",
+      "formatter": "default"
+    },
+    "file": {
+        "level": "INFO",
+        "class": "logging.FileHandler",
+        "formatter": "default",
+        "filename":"gertrude.log"
+      }
+  },
+  "loggers": {
+    "gertrude": {
+        "handlers": ["default", "file"],
+        "level": "DEBUG",
+        "propagate": false
+    }
+  },
+  "root": {
+    "level": "DEBUG",
+    "handlers": [
+      "default",
+      "file"
+    ]
+  }
+}

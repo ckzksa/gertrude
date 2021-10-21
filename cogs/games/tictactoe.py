@@ -1,7 +1,10 @@
 import discord
 import asyncio
+import logging
 
 from discord_components import Button, ButtonStyle
+
+log = logging.getLogger(__name__)
 
 class Tictactoe():
   def __init__(self, bot, ctx, user: discord.Member) -> None:
@@ -83,7 +86,8 @@ class Tictactoe():
         await interaction.respond(type=7, content=f"It is {players[turn].mention}'s turn.", components=components)
     except asyncio.exceptions.TimeoutError as e:
       components = [[Button(style=ButtonStyle.gray, label=board[x+y], disabled=True, custom_id=str(x+y)) for x in range(3)] for y in range(0,8,3)]
-      print("timeout")
+      log.warn(f'Tictactoe Timeout message_id={game_message.id}')
       await game_message.edit(content=f'Game Over! (timeout)', components=components)
     except Exception as e:
+      log.error(e)
       await game_message.edit(content=f'Oooops an error occured')

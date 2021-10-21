@@ -1,4 +1,4 @@
-import json
+import logging
 import discord
 import re
 import random
@@ -6,6 +6,8 @@ import random
 from discord import FFmpegPCMAudio
 from discord.ext import commands
 from youtube_dl import YoutubeDL
+
+log = logging.getLogger(__name__)
 
 YDL_OPTIONS = {
   'format': 'bestaudio', # bestaudio prevents live streams
@@ -42,9 +44,9 @@ class Song():
       if re.match(URL_VALIDATOR, str) is not None:
         self.meta = ydl.extract_info(str, download=False)
       else:
-        print(f"Searching for {str} on Youtube")
+        log.debug(f"Searching for {str} on Youtube")
         self.meta = ydl.extract_info(f"ytsearch:{str}", download=False)['entries'][0]
-        print(f"Found {self.meta['title']}")
+        log.debug(f"Found {self.meta['title']}")
 
   @property
   def url(self):
@@ -133,7 +135,7 @@ class Music(commands.Cog, name="Music"):
     self.playing_song = queue.pop()
     if not self.playing_song: return
 
-    print(f"Playing {self.playing_song.meta['title']} on {ctx.guild.name}")
+    log.debug(f"Playing {self.playing_song.meta['title']} on {ctx.guild.name}")
     ctx.voice_client.play(FFmpegPCMAudio(self.playing_song.url, **FFMPEG_OPTIONS), after=lambda e: self.play_next(ctx))
 
   @commands.command(
@@ -211,7 +213,7 @@ class Music(commands.Cog, name="Music"):
         await ctx.send(embed=embed)
     except Exception as e:
       await ctx.send(content='Unable to load this song')
-      print(e)
+      log.warn(e)
       return False
     return True
 
@@ -295,10 +297,10 @@ class Music(commands.Cog, name="Music"):
     try:
       queue.remove(int(id))
     except ValueError as e:
-      print(f"Invalid id ({id}), Must be a integer")
+      log.warn(f"Invalid id ({id}), Must be a integer")
       await ctx.send(content=f"Invalid id ({id}), Must be a integer")
     except IndexError as e:
-      print(f"Invalid id ({id}), Out of range")
+      log.warn(f"Invalid id ({id}), Out of range")
       await ctx.send(content=f"Invalid id ({id}), Out of range")
 
 
