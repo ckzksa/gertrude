@@ -92,7 +92,7 @@ class Rockpaperscissors():
         
     except asyncio.exceptions.TimeoutError as e:
       log.warn(f'RockPaperScissors Timeout message_id={challenge_message.id}')
-      await challenge_message.delete()
+      await challenge_message.edit(content=f'Timeout')
     except Exception as e:
       log.error(e)
       await challenge_message.edit(content=f'Oooops an error occured')
