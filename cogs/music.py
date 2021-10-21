@@ -1,3 +1,4 @@
+import json
 import discord
 import re
 import random
@@ -43,6 +44,8 @@ class Song():
       else:
         print(f"Searching for {str} on Youtube")
         self.meta = ydl.extract_info(f"ytsearch:{str}", download=False)['entries'][0]
+        with open('data.json', 'w') as outfile:
+          json.dump(self.meta, outfile, indent=2)
         print(f"Found {self.meta['title']}")
 
   @property
@@ -67,8 +70,6 @@ class  Queue():
     if len(self.queue) < 1:
       return None
     song = self.queue.pop(0)
-    if self.is_loop:
-      self.queue.append(song)
     return song
   
   def clear(self):
@@ -76,6 +77,9 @@ class  Queue():
 
   def shuffle(self):
     random.shuffle(self.queue)
+  
+  def remove(self, id):
+    del self.queue[id]
     
 
 class Music(commands.Cog, name="Music"):
@@ -124,7 +128,11 @@ class Music(commands.Cog, name="Music"):
     if not ctx.voice_client:
       return
     
-    self.playing_song = self.get_queue_or_create(ctx.guild).pop()
+    queue = self.get_queue_or_create(ctx.guild)
+    if self.playing_song is not None and queue.is_loop:
+      queue.add(self.playing_song)
+
+    self.playing_song = queue.pop()
     if not self.playing_song: return
 
     print(f"Playing {self.playing_song.meta['title']} on {ctx.guild.name}")
@@ -257,8 +265,6 @@ class Music(commands.Cog, name="Music"):
   async def loop_command(self, ctx):
     queue = self.get_queue_or_create(ctx.guild)
     queue.is_loop = not queue.is_loop
-    if queue.is_loop:
-      queue.add(self.playing_song)
     await ctx.send(content="Loop activated" if queue.is_loop else "Loop deactivated")
 
   @commands.command(
@@ -269,6 +275,23 @@ class Music(commands.Cog, name="Music"):
   async def shuffle_command(self, ctx):
     if self.queues.get(ctx.guild):
       self.queues[ctx.guild].shuffle()
+
+  @commands.command(
+    name="remove",
+    description="Remove a song from the queue",
+    brief="Remove a song from the queue",
+  )
+  async def remove_command(self, ctx, id):
+    queue = self.get_queue_or_create(ctx.guild)
+    try:
+      queue.remove(int(id))
+    except ValueError as e:
+      print(f"Invalid id ({id}), Must be a integer")
+      await ctx.send(content=f"Invalid id ({id}), Must be a integer")
+    except IndexError as e:
+      print(f"Invalid id ({id}), Out of range")
+      await ctx.send(content=f"Invalid id ({id}), Out of range")
+
 
 def setup(bot: commands.Bot):
   bot.add_cog(Music(bot))
