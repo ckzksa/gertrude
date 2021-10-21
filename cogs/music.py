@@ -244,6 +244,10 @@ class Music(commands.Cog, name="Music"):
     list = ''
     queue = self.get_queue_or_create(ctx.guild)
 
+    if queue.length <= 0:
+      await ctx.send('The queue is empty')
+      return
+
     for i, song in enumerate(queue.queue):
       list += f'[{i}] {song.meta["title"]} [{self.format_duration(song.meta["duration"])}] added by {song.requester}\n'
       total_duration += song.meta["duration"]
