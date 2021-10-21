@@ -19,8 +19,6 @@ class Rockpaperscissors():
       return
 
     game_over = False
-    player_one = (self.user, None)
-    player_two = (self.ctx.author, None)
     players = {
       self.user: None,
       self.ctx.author: None,

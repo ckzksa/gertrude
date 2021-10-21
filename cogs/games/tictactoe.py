@@ -25,12 +25,7 @@ class Tictactoe():
     }
     turn = 'X'
 
-    components = [
-      [Button(style=ButtonStyle.gray, label=' ', custom_id='0'), Button(style=ButtonStyle.gray, label=' ', custom_id='1'), Button(style=ButtonStyle.gray, label=' ', custom_id='2')],
-      [Button(style=ButtonStyle.gray, label=' ', custom_id='3'), Button(style=ButtonStyle.gray, label=' ', custom_id='4'), Button(style=ButtonStyle.gray, label=' ', custom_id='5')],
-      [Button(style=ButtonStyle.gray, label=' ', custom_id='6'), Button(style=ButtonStyle.gray, label=' ', custom_id='7'), Button(style=ButtonStyle.gray, label=' ', custom_id='8')],
-    ]
-
+    components = [[Button(style=ButtonStyle.gray, label=board[x+y], custom_id=str(x+y)) for x in range(3)] for y in range(0,8,3)]
     game_message = await self.ctx.send(content=f'{self.user.mention} vs {self.ctx.author.mention}', components=components)
 
     def is_over(board):
