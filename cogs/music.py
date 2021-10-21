@@ -175,6 +175,9 @@ class Music(commands.Cog, name="Music"):
       ctx.voice_client.resume()
 
   def format_duration(self, duration):
+    if duration <= 0:
+      return 'LIVE'
+      
     formated_duration = ''
     seconds = duration % 60
     minutes = duration // 60 % 60
