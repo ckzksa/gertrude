@@ -8,7 +8,7 @@ from discord.ext import commands
 from youtube_dl import YoutubeDL
 
 YDL_OPTIONS = {
-  'format': 'bestaudio',
+  # 'format': 'bestaudio', # bestaudio prevents live streams
   'quiet': True,
   'postprocessors' : [{
       'key' : 'FFmpegExtractAudio',
@@ -44,8 +44,6 @@ class Song():
       else:
         print(f"Searching for {str} on Youtube")
         self.meta = ydl.extract_info(f"ytsearch:{str}", download=False)['entries'][0]
-        with open('data.json', 'w') as outfile:
-          json.dump(self.meta, outfile, indent=2)
         print(f"Found {self.meta['title']}")
 
   @property
