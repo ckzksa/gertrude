@@ -10,7 +10,7 @@ from discord_components import DiscordComponents
 from logging.config import dictConfig
 
 __version__ = '1.0'
-config_filename = 'log_config.json'
+config_filename = 'config.json'
 
 log = logging.getLogger(__name__)
 
