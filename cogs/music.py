@@ -244,7 +244,7 @@ class Music(commands.Cog, name="Music"):
     list = ''
     queue = self.get_queue_or_create(ctx.guild)
 
-    if queue.length <= 0:
+    if self.playing_song is None:
       await ctx.send('The queue is empty')
       return
 
