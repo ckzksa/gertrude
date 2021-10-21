@@ -286,7 +286,11 @@ class Music(commands.Cog, name="Music"):
     description="Remove a song from the queue",
     brief="Remove a song from the queue",
   )
-  async def remove_command(self, ctx, id):
+  async def remove_command(self, ctx, id=None):
+    if id is None:
+      self.playing_song = None
+      await ctx.invoke(self.skip_command)
+
     queue = self.get_queue_or_create(ctx.guild)
     try:
       queue.remove(int(id))
