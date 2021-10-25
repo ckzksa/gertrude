@@ -36,7 +36,7 @@ class Game(Cog):
     description="Roll a dice",
     brief="Roll a dice",
   )
-  async def dice_command(self, ctx, dice: int):
+  async def dice_command(self, ctx, dice: str):
     await Dice(self.bot, ctx, dice).play()
 
 def setup(bot: Bot):

@@ -22,21 +22,23 @@ class Dice():
     '9': '<:nine:902233227744391178>',
   }
 
-  def __init__(self, bot, ctx, dice: int) -> None:
+  def __init__(self, bot, ctx, dice: str) -> None:
     self.bot = bot
     self.ctx = ctx
     self.dice = dice
   
   async def play(self):
     try:
+      print(self.dice)
+      print(type(self.dice))
       if re.search('^[dD][0-9]+', self.dice) is not None:
-        dice = self.dice[1:]
-      value = random.randint(1, int(dice))
+        self.dice = self.dice[1:]
+      value = random.randint(1, int(self.dice))
 
-      str = ''
+      str_value = ''
       for digit in str(value):
-        str += self.number_to_emoji[digit]
-      await self.ctx.send(str)
+        str_value += self.number_to_emoji[digit]
+      await self.ctx.send(str_value)
     except ValueError as e:
       log.error(e)
       await self.ctx.send(content=f'It ain\'t a number #nobrain')
