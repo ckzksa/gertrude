@@ -3,6 +3,7 @@ import logging
 
 from cogs.games.tictactoe import Tictactoe
 from cogs.games.rps import Rockpaperscissors
+from cogs.games.dice import Dice
 from discord.ext.commands import Bot, Cog
 from discord.ext import commands
 
@@ -30,6 +31,13 @@ class Game(Cog):
   async def rps_command(self, ctx, user: discord.Member):
     await Rockpaperscissors(self.bot, ctx, user).play()
     
+  @commands.command(
+    name="dice",
+    description="Roll a dice",
+    brief="Roll a dice",
+  )
+  async def dice_command(self, ctx, dice: int):
+    await Dice(self.bot, ctx, dice).play()
 
 def setup(bot: Bot):
   bot.add_cog(Game(bot))
