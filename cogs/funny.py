@@ -8,7 +8,7 @@ from discord.ext import commands
 
 log = logging.getLogger(__name__)
 
-class Joke(Cog):
+class Funny(Cog):
   def __init__(self, bot: Bot):
     self.bot = bot
 
@@ -36,4 +36,4 @@ class Joke(Cog):
       await session.close()
 
 def setup(bot: Bot):
-  bot.add_cog(Joke(bot))
+  bot.add_cog(Funny(bot))
