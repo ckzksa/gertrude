@@ -21,15 +21,22 @@ class Admin(Cog):
   async def update_command(self, ctx):
     if str(ctx.author.id) not in self.bot.owner_id:
       return
+  
+    process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    if type(out) is bytes:
+      out = out.decode("utf-8").replace("\n", "")
+    if type(err) is bytes:
+      err = err.decode("utf-8").replace("\n", "")
     
-    cmd = subprocess.run(["git", "pull"])
-    if cmd.returncode == 0:
-      log.info(f'Bot updated')
-      await ctx.send('Bot updated\nRestart the bot to apply the changes')
+    if process.returncode == 0:
+      log.info(out)
+      await ctx.send(f'{out}')
     else:
-      log.error(f'Code={cmd.returncode}')
-      await ctx.send(f'Error at update [{cmd.returncode}]')
+      log.error(f'Code={process.returncode} - {err}')
+      await ctx.send(f'Error at update [{process.returncode}] - {err}')
 
+  # TODO remember you restarted
   @commands.command(
     name="restart",
     description="Restart the client",
