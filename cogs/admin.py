@@ -36,7 +36,6 @@ class Admin(Cog):
       log.error(f'Code={process.returncode} - {err}')
       await ctx.send(f'Error at update [{process.returncode}] - {err}')
 
-  # TODO remember you restarted
   @commands.command(
     name="restart",
     description="Restart the client",
