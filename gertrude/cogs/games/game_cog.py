@@ -1,9 +1,9 @@
 import discord
 import logging
 
-from cogs.games.tictactoe import Tictactoe
-from cogs.games.rps import Rockpaperscissors
-from cogs.games.dice import Dice
+from .tictactoe import Tictactoe
+from .rps import Rockpaperscissors
+from .dice import Dice
 from discord.ext.commands import Bot, Cog
 from discord.ext import commands
 

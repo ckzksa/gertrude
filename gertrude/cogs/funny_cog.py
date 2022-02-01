@@ -1,4 +1,3 @@
-import subprocess
 import aiohttp
 import logging
 import ast

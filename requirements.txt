@@ -1,5 +1,5 @@
 discord-py
 pynacl
-youtube_dl
+yt-dlp
 discord_components
 flask
